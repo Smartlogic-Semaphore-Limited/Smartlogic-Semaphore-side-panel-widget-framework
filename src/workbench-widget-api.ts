@@ -107,6 +107,22 @@ type LabelEditFormData = {
 };
 
 /**
+ * Data transfer type for configure the way widget is opened.
+ * Used in {@link openWidget}
+ *
+ * @category KMM action parameters
+ */
+type OpenWidgetConfig = {
+  modal?:boolean| {
+    animation: boolean,
+    backdrop:boolean|string,
+    keyboard?: boolean,
+    size?: string,
+    windowClass?: "right"|"left",
+  }
+}
+
+/**
  * @category Widget Api
  */
 export class WorkbenchWidgetApi {
@@ -173,8 +189,8 @@ export class WorkbenchWidgetApi {
   /**
    * Open different widget in the same model.
    */
-  openWidget(targetWidgetId: string) {
-    var message = this._createMessage("openWidget", {}, targetWidgetId);
+  openWidget(targetWidgetId: string, config: OpenWidgetConfig = {}) {
+    var message = this._createMessage("openWidget", {config}, targetWidgetId);
     return this._postMessage<void>(message);
   }
 
