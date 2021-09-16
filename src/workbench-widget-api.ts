@@ -107,6 +107,22 @@ type LabelEditFormData = {
 };
 
 /**
+ * Data transfer type for configure the way widget is opened.
+ * Used in {@link openWidget}
+ *
+ * @category KMM action parameters
+ */
+type OpenWidgetConfig = {
+  modal?: boolean| {
+    animation?: boolean,
+    backdrop?: boolean | "static",
+    keyboard?: boolean,
+    size?: "sm" | "lg" | "xl" | "",
+    windowClass?: "right" | "left" | "",
+  }
+}
+
+/**
  * @category Widget Api
  */
 export class WorkbenchWidgetApi {
@@ -164,17 +180,20 @@ export class WorkbenchWidgetApi {
 
   /**
    * Close right side panel in host application.
+   * @param targetWidgetId Id of the widget to be closed. If not passed it will close itself.
    */
-  closeWidget() {
-    var message = this._createMessage("closeWidget");
+  closeWidget(targetWidgetId?: string) {
+    var message = this._createMessage("closeWidget", {}, targetWidgetId);
     return this._postMessage<void>(message);
   }
 
   /**
    * Open different widget in the same model.
+   * @param targetWidgetId Id of the widget to be opened.
+   * @param config Optional config for opening widget.
    */
-  openWidget(targetWidgetId: string) {
-    var message = this._createMessage("openWidget", {}, targetWidgetId);
+  openWidget(targetWidgetId: string, config: OpenWidgetConfig = {}) {
+    var message = this._createMessage("openWidget", {config}, targetWidgetId);
     return this._postMessage<void>(message);
   }
 
