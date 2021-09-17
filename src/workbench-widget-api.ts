@@ -168,6 +168,15 @@ export class WorkbenchWidgetApi {
   }
 
   /**
+   * Fetch the context data {@link WorkbenchWidgetApi.openWidget}.
+   */
+  getContext() {
+    var message = this._createMessage("getContext");
+    return this._postMessage<{
+      context: any;
+    }>(message);
+  }
+  /**
    * Navigate host application to item.
    * @param item Item can be concept, concept scheme, relationship, class etc. existing in current task.
    */
@@ -191,9 +200,10 @@ export class WorkbenchWidgetApi {
    * Open different widget in the same model.
    * @param targetWidgetId Id of the widget to be opened.
    * @param config Optional config for opening widget.
+   * @param context Optional context data. It can be fetched later by getContextData {@link WorkbenchWidgetApi.getContextData}.
    */
-  openWidget(targetWidgetId: string, config: OpenWidgetConfig = {}) {
-    var message = this._createMessage("openWidget", {config}, targetWidgetId);
+  openWidget(targetWidgetId: string, config: OpenWidgetConfig = {}, context: any = null) {
+    var message = this._createMessage("openWidget", {config, context}, targetWidgetId);
     return this._postMessage<void>(message);
   }
 
@@ -481,7 +491,7 @@ export class WorkbenchWidgetApi {
      * @param action name of the particular action.
      * @param data data needed for particular action.
      */
-    call: this._actionCall,
+    call: this._actionCall.bind(this),
     /**
      * Shows form for add new Preferred Label.
      * @param name default value for the name field.
