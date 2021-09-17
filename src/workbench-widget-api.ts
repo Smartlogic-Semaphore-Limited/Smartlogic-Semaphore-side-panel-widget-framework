@@ -200,7 +200,7 @@ export class WorkbenchWidgetApi {
    * Open different widget in the same model.
    * @param targetWidgetId Id of the widget to be opened.
    * @param config Optional config for opening widget.
-   * @param context Optional context data. It can be fetched later by getContextData {@link WorkbenchWidgetApi.getContextData}.
+   * @param context Optional context data. It can be fetched later by getContext {@link WorkbenchWidgetApi.getContext}.
    */
   openWidget(targetWidgetId: string, config: OpenWidgetConfig = {}, context: any = null) {
     var message = this._createMessage("openWidget", {config, context}, targetWidgetId);
