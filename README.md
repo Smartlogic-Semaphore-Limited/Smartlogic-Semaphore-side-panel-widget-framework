@@ -135,4 +135,4 @@ npm run build
 Other possible targets are
 
 - `npm run test` - to test produced package after it was built
-- `npm run doc` - to regenerate API documentation from sources
+- `npm run docs` - to regenerate API documentation from sources
