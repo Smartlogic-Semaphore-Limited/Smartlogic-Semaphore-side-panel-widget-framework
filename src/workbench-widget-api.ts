@@ -156,6 +156,13 @@ export class WorkbenchWidgetApi {
   }
 
   /**
+   * Fetch current widget id
+   */
+   getCurrentWidgetId() {
+    return this.WIDGET_ID;
+  }
+
+  /**
    * Fetch current host state params (modelGraphUri, taskGraphUri, itemUri).
    */
   getStateParams() {
