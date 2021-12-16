@@ -32,7 +32,7 @@ type Message = {
 /**
  * Type of event that KMM application can broadcast to widgets.
  *
- * Widgets can register to listen to specyfic event using
+ * Widgets can register to listen to specific event using
  * @category KMM Messaging
  */
 type KmmEvent =
@@ -152,6 +152,24 @@ export class WorkbenchWidgetApi {
     }
     this._eventListeners.get(type)!.add(listener);
     return () => this._eventListeners.get(type)!.delete(listener);
+  }
+
+  /**
+   * Fetch path to main studio instance
+   * @returns path to main studio instance
+   */
+  getStudioPath() {
+    const message = this._createMessage("getStudioPath");
+    return this._postMessage<string>(message);
+  }
+
+  /**
+   * Fetch path to GraphQL endpoint of studio
+   * @returns string path to studio's GraphQL endpoint
+   */
+  getStudioGraphQLPath() {
+    const message = this._createMessage("getStudioGraphQLPath");
+    return this._postMessage<string>(message);
   }
 
   /**
