@@ -1,10 +1,7 @@
 import { decycle, retrocycle } from "./cycle";
 
 /** @internal */
-function hasOwnProperty<X extends {}, Y extends PropertyKey>(
-  obj: X,
-  prop: Y
-): obj is X & Record<Y, unknown> {
+function hasOwnProperty<X extends {}, Y extends PropertyKey>(obj: X, prop: Y): obj is X & Record<Y, unknown> {
   return obj.hasOwnProperty(prop);
 }
 
@@ -113,21 +110,23 @@ type LabelEditFormData = {
  * @category KMM action parameters
  */
 type OpenWidgetConfig = {
-  modal?: boolean| {
-    animation?: boolean,
-    backdrop?: boolean | "static",
-    keyboard?: boolean,
-    size?: "sm" | "lg" | "xl" | "",
-    windowClass?: "right" | "left" | "",
-  }
-}
+  modal?:
+    | boolean
+    | {
+        animation?: boolean;
+        backdrop?: boolean | "static";
+        keyboard?: boolean;
+        size?: "sm" | "lg" | "xl" | "";
+        windowClass?: "right" | "left" | "";
+      };
+};
 
 /**
  * @category Widget Api
  */
 export class WorkbenchWidgetApi {
   private readonly WIDGET_ID = decodeURIComponent(
-    window.location.hash.substr(1).replace(/^\//, "").replace(/\+/g, " ")
+    window.location.hash.substr(1).replace(/^\//, "").replace(/\+/g, " "),
   );
   private _promises: Map<string, WaitForResponse> = new Map();
 
@@ -158,7 +157,7 @@ export class WorkbenchWidgetApi {
   /**
    * Fetch current widget id
    */
-   getCurrentWidgetId() {
+  getCurrentWidgetId() {
     return this.WIDGET_ID;
   }
 
@@ -185,9 +184,10 @@ export class WorkbenchWidgetApi {
   }
   /**
    * Navigate host application to item.
-   * @param item Item can be concept, concept scheme, relationship, class etc. existing in current task.
+   * @param item Item can be concept, concept scheme, relationship, class etc. existing in current task, formed as JsonLd object.
+   *   You can use {@link getConceptDetails} to receive concept as JsonLd object.
    */
-  navigateToItem(item: string) {
+  navigateToItem(item: object) {
     var message = this._createMessage("navigateToItem", {
       item,
     });
@@ -210,7 +210,7 @@ export class WorkbenchWidgetApi {
    * @param context Optional context data. It can be fetched later by getContext {@link WorkbenchWidgetApi.getContext}.
    */
   openWidget(targetWidgetId: string, config: OpenWidgetConfig = {}, context: any = null) {
-    var message = this._createMessage("openWidget", {config, context}, targetWidgetId);
+    var message = this._createMessage("openWidget", { config, context }, targetWidgetId);
     return this._postMessage<void>(message);
   }
 
@@ -225,10 +225,7 @@ export class WorkbenchWidgetApi {
    * Return all Associative Types.
    */
   getAssociativeUnfilteredTypes(taskGraphUri: string) {
-    return this._dataSourcesWithTaskUri(
-      "getAssociativeUnfilteredTypes",
-      taskGraphUri
-    );
+    return this._dataSourcesWithTaskUri("getAssociativeUnfilteredTypes", taskGraphUri);
   }
 
   /**
@@ -237,53 +234,35 @@ export class WorkbenchWidgetApi {
    * @param itemUri
    */
   getAssociativeTypes(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getAssociativeTypes",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getAssociativeTypes", taskGraphUri, itemUri);
   }
 
   /**
    * Return all Broader Types.
    */
   getBroaderUnfilteredTypes(taskGraphUri: string) {
-    return this._dataSourcesWithTaskUri(
-      "getBroaderUnfilteredTypes",
-      taskGraphUri
-    );
+    return this._dataSourcesWithTaskUri("getBroaderUnfilteredTypes", taskGraphUri);
   }
 
   /**
    * Return Broader Types valid for current item.
    */
   getBroaderTypes(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getBroaderTypes",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getBroaderTypes", taskGraphUri, itemUri);
   }
 
   /**
    * Return all Narrower Types.
    */
   getNarrowerUnfilteredTypes(taskGraphUri: string) {
-    return this._dataSourcesWithTaskUri(
-      "getNarrowerUnfilteredTypes",
-      taskGraphUri
-    );
+    return this._dataSourcesWithTaskUri("getNarrowerUnfilteredTypes", taskGraphUri);
   }
 
   /**
    * Return Narrower Types valid for current item.
    */
   getNarrowerTypes(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getNarrowerTypes",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getNarrowerTypes", taskGraphUri, itemUri);
   }
 
   /**
@@ -304,66 +283,42 @@ export class WorkbenchWidgetApi {
    * Return All Alternative Labels Types.
    */
   getAltLabelUnfilteredProperties(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getAltLabelUnfilteredProperties",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getAltLabelUnfilteredProperties", taskGraphUri, itemUri);
   }
 
   /**
    * Return Alternative Labels Types valid for item.
    */
   getAltLabelProperties(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getAltLabelProperties",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getAltLabelProperties", taskGraphUri, itemUri);
   }
 
   /**
    * Return Metadata types.
    */
   getMetadataUnfilteredTypes(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getMetadataUnfilteredTypes",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getMetadataUnfilteredTypes", taskGraphUri, itemUri);
   }
 
   /**
    * Return Metadata types valid for item.
    */
   getMetadataTypes(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getMetadataTypes",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getMetadataTypes", taskGraphUri, itemUri);
   }
 
   /**
    * Return Item with metadata properties.
    */
   getDetailsWithMetadata(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getDetailsWithMetadata",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getDetailsWithMetadata", taskGraphUri, itemUri);
   }
 
   /**
    *  Return both default metadata and metadata specific for given domain.
    */
   getMetadataForDomain(taskGraphUri: string, domainUri: string) {
-    return this._dataSourceWithItemAndDomainUri(
-      "getMetadataForDomain",
-      taskGraphUri,
-      domainUri
-    );
+    return this._dataSourceWithItemAndDomainUri("getMetadataForDomain", taskGraphUri, domainUri);
   }
 
   /**
@@ -377,116 +332,56 @@ export class WorkbenchWidgetApi {
    *  Return concept details.
    */
   getConceptDetails(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getConceptDetails",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getConceptDetails", taskGraphUri, itemUri);
   }
 
   /**
    *  Return concept guid data.
    */
   getConceptGuid(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getConceptGuid",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getConceptGuid", taskGraphUri, itemUri);
   }
 
   /**
    *  Return concept details with preferred labels.
    */
   getConceptPrefLabels(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getConceptPrefLabels",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getConceptPrefLabels", taskGraphUri, itemUri);
   }
 
   /**
    *  Return concept details with alternative labels.
    */
   getConceptAltLabels(taskGraphUri: string, itemUri: string) {
-    return this._dataSourcesWithTaskAndItemUri(
-      "getConceptAltLabels",
-      taskGraphUri,
-      itemUri
-    );
+    return this._dataSourcesWithTaskAndItemUri("getConceptAltLabels", taskGraphUri, itemUri);
   }
 
   /**
    *  Return concept details with associative concepts grouped by relation type.
    */
-  getConceptRelated(
-    taskGraphUri: string,
-    itemUri: string,
-    limit: number = 10,
-    offset: number = 0
-  ) {
-    return this._dataSourcesWithTaskAndItemUriAndPaging(
-      "getConceptRelated",
-      taskGraphUri,
-      itemUri,
-      limit,
-      offset
-    );
+  getConceptRelated(taskGraphUri: string, itemUri: string, limit: number = 10, offset: number = 0) {
+    return this._dataSourcesWithTaskAndItemUriAndPaging("getConceptRelated", taskGraphUri, itemUri, limit, offset);
   }
 
   /**
    *  Return concept details with narrower concepts grouped by relation type.
    */
-  getConceptNarrower(
-    taskGraphUri: string,
-    itemUri: string,
-    limit: number = 10,
-    offset: number = 0
-  ) {
-    return this._dataSourcesWithTaskAndItemUriAndPaging(
-      "getConceptNarrower",
-      taskGraphUri,
-      itemUri,
-      limit,
-      offset
-    );
+  getConceptNarrower(taskGraphUri: string, itemUri: string, limit: number = 10, offset: number = 0) {
+    return this._dataSourcesWithTaskAndItemUriAndPaging("getConceptNarrower", taskGraphUri, itemUri, limit, offset);
   }
 
   /**
    *  Return concept details with broader concepts grouped by relation type.
    */
-  getConceptBroader(
-    taskGraphUri: string,
-    itemUri: string,
-    limit: number = 10,
-    offset: number = 0
-  ) {
-    return this._dataSourcesWithTaskAndItemUriAndPaging(
-      "getConceptBroader",
-      taskGraphUri,
-      itemUri,
-      limit,
-      offset
-    );
+  getConceptBroader(taskGraphUri: string, itemUri: string, limit: number = 10, offset: number = 0) {
+    return this._dataSourcesWithTaskAndItemUriAndPaging("getConceptBroader", taskGraphUri, itemUri, limit, offset);
   }
 
   /**
    *  Return concept scheme details with top concepts.
    */
-  getTopConcepts(
-    taskGraphUri: string,
-    itemUri: string,
-    limit: number = 10,
-    offset: number = 0
-  ) {
-    return this._dataSourcesWithTaskAndItemUriAndPaging(
-      "getTopConcepts",
-      taskGraphUri,
-      itemUri,
-      limit,
-      offset
-    );
+  getTopConcepts(taskGraphUri: string, itemUri: string, limit: number = 10, offset: number = 0) {
+    return this._dataSourcesWithTaskAndItemUriAndPaging("getTopConcepts", taskGraphUri, itemUri, limit, offset);
   }
 
   /**
@@ -506,11 +401,7 @@ export class WorkbenchWidgetApi {
      *        default code for the system is used.
      * @param initialSave - If it is true the save action is called and inf it succeed the form will disappear.
      */
-    showFormAddPrefLabel: (
-      name: string,
-      langCode: string,
-      initialSave = false
-    ) =>
+    showFormAddPrefLabel: (name: string, langCode: string, initialSave = false) =>
       this._actionCall("showFormAddPrefLabel", {
         name: name,
         langCode: langCode,
@@ -524,12 +415,7 @@ export class WorkbenchWidgetApi {
      * default type for the system is used.
      * @param initialSave - If it is true the save action is called and inf it succeed the form will disappear.
      */
-    showFormAddAltLabel: (
-      name: string,
-      langCode: string,
-      typeUri: string,
-      initialSave = false
-    ) =>
+    showFormAddAltLabel: (name: string, langCode: string, typeUri: string, initialSave = false) =>
       this._actionCall("showFormAddAltLabel", {
         name: name,
         langCode: langCode,
@@ -544,12 +430,7 @@ export class WorkbenchWidgetApi {
      * default type for the system is used.
      * @param initialSave - If it is true the save action is called and inf it succeed the form will disappear.
      */
-    showFormAddMultipleAltLabel: (
-      names: string,
-      langCode: string,
-      typeUri: string,
-      initialSave = false
-    ) =>
+    showFormAddMultipleAltLabel: (names: string, langCode: string, typeUri: string, initialSave = false) =>
       this._actionCall("showFormAddMultipleAltLabel", {
         names: names,
         langCode: langCode,
@@ -561,10 +442,7 @@ export class WorkbenchWidgetApi {
      * @param rows - Translations that needs to be populated to the form.
      * @param initialSave - If it is true the save action is called and inf it succeed the form will disappear.
      */
-    showFormAddMultipleTranslation: (
-      rows: Array<LabelEditFormData>,
-      initialSave = false
-    ) =>
+    showFormAddMultipleTranslation: (rows: Array<LabelEditFormData>, initialSave = false) =>
       this._actionCall("showFormAddMultipleTranslation", {
         rows,
         initialSave: Boolean(initialSave),
@@ -577,12 +455,7 @@ export class WorkbenchWidgetApi {
      * empty value is used.
      * @param initialSave - If it is true the save action is called and inf it succeed the form will disappear.
      */
-    showFormAddRelated: (
-      typeUri: string,
-      targetUri: string,
-      targetName: string,
-      initialSave = false
-    ) =>
+    showFormAddRelated: (typeUri: string, targetUri: string, targetName: string, initialSave = false) =>
       this._actionCall("showFormAddRelated", {
         typeUri: typeUri,
         targetUri: targetUri,
@@ -597,12 +470,7 @@ export class WorkbenchWidgetApi {
      * empty value is used.
      * @param initialSave - If it is true the save action is called and inf it succeed the form will disappear.
      */
-    showFormAddBroader: (
-      typeUri: string,
-      targetUri: string,
-      targetName: string,
-      initialSave = false
-    ) =>
+    showFormAddBroader: (typeUri: string, targetUri: string, targetName: string, initialSave = false) =>
       this._actionCall("showFormAddBroader", {
         typeUri: typeUri,
         targetUri: targetUri,
@@ -618,12 +486,7 @@ export class WorkbenchWidgetApi {
      * empty value is used.
      * @param initialSave - If it is true the save action is called and inf it succeed the form will disappear.
      */
-    showFormAddNarrower: (
-      typeUri: string,
-      targetUri: string,
-      targetName: string,
-      initialSave = false
-    ) =>
+    showFormAddNarrower: (typeUri: string, targetUri: string, targetName: string, initialSave = false) =>
       this._actionCall("showFormAddNarrower", {
         typeUri: typeUri,
         targetUri: targetUri,
@@ -642,7 +505,7 @@ export class WorkbenchWidgetApi {
 
   private _getBackendData<Result>(
     backendFunction: string,
-    backendArguments: { [key: string]: string | number | undefined }
+    backendArguments: { [key: string]: string | number | undefined },
   ) {
     const message = this._createMessage("getBackendData", {
       backendFunction,
@@ -654,7 +517,7 @@ export class WorkbenchWidgetApi {
   private _dataSourcesWithTaskAndItemUri<Result = unknown>(
     backendFunction: string,
     taskGraphUri: string,
-    itemUri: string
+    itemUri: string,
   ) {
     return this._getBackendData<Result>(backendFunction, {
       taskGraphUri,
@@ -667,7 +530,7 @@ export class WorkbenchWidgetApi {
     taskGraphUri: string,
     itemUri: string,
     limit: number,
-    offset: number
+    offset: number,
   ) {
     return this._getBackendData<Result>(backendFunction, {
       taskGraphUri,
@@ -680,7 +543,7 @@ export class WorkbenchWidgetApi {
   private _dataSourceWithItemAndDomainUri<Result = unknown>(
     backendFunction: string,
     taskGraphUri: string,
-    domainUri: string
+    domainUri: string,
   ) {
     return this._getBackendData<Result>(backendFunction, {
       taskGraphUri,
@@ -688,35 +551,23 @@ export class WorkbenchWidgetApi {
     });
   }
 
-  private _dataSourcesWithTaskUri<Result = unknown>(
-    backendFunction: string,
-    taskGraphUri: string
-  ) {
+  private _dataSourcesWithTaskUri<Result = unknown>(backendFunction: string, taskGraphUri: string) {
     return this._getBackendData<Result>(backendFunction, { taskGraphUri });
   }
 
-  private _dataSourcesWithModelUri<Result = unknown>(
-    backendFunction: string,
-    modelGraphUri: string
-  ) {
+  private _dataSourcesWithModelUri<Result = unknown>(backendFunction: string, modelGraphUri: string) {
     return this._getBackendData<Result>(backendFunction, { modelGraphUri });
   }
 
   private withOnlyDefinedValues = (obj: SimpleObject<any>) =>
-    Object.fromEntries(
-      Object.entries(obj).filter(([_, value]) => value != null)
-    );
+    Object.fromEntries(Object.entries(obj).filter(([_, value]) => value != null));
 
   private _postIndex = 0;
   private _generateTag() {
     this._postIndex++;
     return this.WIDGET_ID + "_" + this._postIndex;
   }
-  private _createMessage(
-    key: string,
-    additionalData: SimpleObject = {},
-    widgetId = this.WIDGET_ID
-  ): Message {
+  private _createMessage(key: string, additionalData: SimpleObject = {}, widgetId = this.WIDGET_ID): Message {
     const tag = this._generateTag();
     return {
       type: "action",
@@ -763,9 +614,7 @@ export class WorkbenchWidgetApi {
     }
   }
 
-  private _receiveMessage = (
-    event: MessageEvent<MaybeResponseMessage | MaybeEventMessage | unknown>
-  ) => {
+  private _receiveMessage = (event: MessageEvent<MaybeResponseMessage | MaybeEventMessage | unknown>) => {
     this._logMessage("receiveMessage", event);
     if (typeof event.data === "object" && event.data != null) {
       const data = event.data;
