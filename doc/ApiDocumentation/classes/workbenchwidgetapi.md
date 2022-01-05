@@ -36,6 +36,9 @@
 * [getContext](workbenchwidgetapi.md#getcontext)
 * [getCurrentWidgetId](workbenchwidgetapi.md#getcurrentwidgetid)
 * [getDetailsWithMetadata](workbenchwidgetapi.md#getdetailswithmetadata)
+* [getKmmApiPath](workbenchwidgetapi.md#getkmmapipath)
+* [getKmmUiPath](workbenchwidgetapi.md#getkmmuipath)
+* [getKmmVersion](workbenchwidgetapi.md#getkmmversion)
 * [getMetadataForDomain](workbenchwidgetapi.md#getmetadatafordomain)
 * [getMetadataTypes](workbenchwidgetapi.md#getmetadatatypes)
 * [getMetadataUnfilteredTypes](workbenchwidgetapi.md#getmetadataunfilteredtypes)
@@ -60,7 +63,7 @@
 
 \+ **new WorkbenchWidgetApi**(`debug?`: boolean): [WorkbenchWidgetApi](workbenchwidgetapi.md)
 
-*Defined in [src/workbench-widget-api.ts:133](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L133)*
+*Defined in [src/workbench-widget-api.ts:134](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L134)*
 
 #### Parameters:
 
@@ -76,7 +79,7 @@ Name | Type | Default value | Description |
 
 ▸ **addEventListener**(`type`: [KmmEventType](../README.md#kmmeventtype), `listener`: [EventListener](../README.md#eventlistener)): function
 
-*Defined in [src/workbench-widget-api.ts:149](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L149)*
+*Defined in [src/workbench-widget-api.ts:151](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L151)*
 
 Registers a new listener for KMM events.
 
@@ -97,7 +100,7 @@ ___
 
 ▸ **closeWidget**(`targetWidgetId?`: undefined \| string): Promise\<void>
 
-*Defined in [src/workbench-widget-api.ts:219](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L219)*
+*Defined in [src/workbench-widget-api.ts:244](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L244)*
 
 Close right side panel in host application.
 
@@ -115,7 +118,7 @@ ___
 
 ▸ **getAltLabelProperties**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:310](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L310)*
+*Defined in [src/workbench-widget-api.ts:335](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L335)*
 
 Return Alternative Labels Types valid for item.
 
@@ -134,7 +137,7 @@ ___
 
 ▸ **getAltLabelUnfilteredProperties**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:303](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L303)*
+*Defined in [src/workbench-widget-api.ts:328](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L328)*
 
 Return All Alternative Labels Types.
 
@@ -153,7 +156,7 @@ ___
 
 ▸ **getAssociativeTypes**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:254](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L254)*
+*Defined in [src/workbench-widget-api.ts:279](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L279)*
 
 Return Associative Types valid for current item.
 
@@ -172,7 +175,7 @@ ___
 
 ▸ **getAssociativeUnfilteredTypes**(`taskGraphUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:245](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L245)*
+*Defined in [src/workbench-widget-api.ts:270](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L270)*
 
 Return all Associative Types.
 
@@ -190,7 +193,7 @@ ___
 
 ▸ **getBroaderTypes**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:268](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L268)*
+*Defined in [src/workbench-widget-api.ts:293](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L293)*
 
 Return Broader Types valid for current item.
 
@@ -209,7 +212,7 @@ ___
 
 ▸ **getBroaderUnfilteredTypes**(`taskGraphUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:261](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L261)*
+*Defined in [src/workbench-widget-api.ts:286](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L286)*
 
 Return all Broader Types.
 
@@ -227,7 +230,7 @@ ___
 
 ▸ **getClasses**(`taskGraphUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:238](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L238)*
+*Defined in [src/workbench-widget-api.ts:263](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L263)*
 
 Return class data for current item.
 
@@ -245,7 +248,7 @@ ___
 
 ▸ **getConceptAltLabels**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:373](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L373)*
+*Defined in [src/workbench-widget-api.ts:398](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L398)*
 
  Return concept details with alternative labels.
 
@@ -264,7 +267,7 @@ ___
 
 ▸ **getConceptBroader**(`taskGraphUri`: string, `itemUri`: string, `limit?`: number, `offset?`: number): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:394](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L394)*
+*Defined in [src/workbench-widget-api.ts:419](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L419)*
 
  Return concept details with broader concepts grouped by relation type.
 
@@ -285,7 +288,7 @@ ___
 
 ▸ **getConceptDetails**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:352](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L352)*
+*Defined in [src/workbench-widget-api.ts:377](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L377)*
 
  Return concept details.
 
@@ -304,7 +307,7 @@ ___
 
 ▸ **getConceptGuid**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:359](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L359)*
+*Defined in [src/workbench-widget-api.ts:384](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L384)*
 
  Return concept guid data.
 
@@ -323,7 +326,7 @@ ___
 
 ▸ **getConceptNarrower**(`taskGraphUri`: string, `itemUri`: string, `limit?`: number, `offset?`: number): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:387](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L387)*
+*Defined in [src/workbench-widget-api.ts:412](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L412)*
 
  Return concept details with narrower concepts grouped by relation type.
 
@@ -344,7 +347,7 @@ ___
 
 ▸ **getConceptPrefLabels**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:366](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L366)*
+*Defined in [src/workbench-widget-api.ts:391](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L391)*
 
  Return concept details with preferred labels.
 
@@ -363,7 +366,7 @@ ___
 
 ▸ **getConceptRelated**(`taskGraphUri`: string, `itemUri`: string, `limit?`: number, `offset?`: number): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:380](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L380)*
+*Defined in [src/workbench-widget-api.ts:405](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L405)*
 
  Return concept details with associative concepts grouped by relation type.
 
@@ -384,7 +387,7 @@ ___
 
 ▸ **getConceptSchemes**(`taskGraphUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:345](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L345)*
+*Defined in [src/workbench-widget-api.ts:370](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L370)*
 
  Return all concept schemes for given task.
 
@@ -402,7 +405,7 @@ ___
 
 ▸ **getContext**(): Promise\<{ context: any  }>
 
-*Defined in [src/workbench-widget-api.ts:197](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L197)*
+*Defined in [src/workbench-widget-api.ts:222](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L222)*
 
 Fetch the context data [WorkbenchWidgetApi.openWidget](workbenchwidgetapi.md#openwidget).
 
@@ -414,7 +417,7 @@ ___
 
 ▸ **getCurrentWidgetId**(): string
 
-*Defined in [src/workbench-widget-api.ts:178](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L178)*
+*Defined in [src/workbench-widget-api.ts:203](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L203)*
 
 Fetch current widget id
 
@@ -426,7 +429,7 @@ ___
 
 ▸ **getDetailsWithMetadata**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:331](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L331)*
+*Defined in [src/workbench-widget-api.ts:356](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L356)*
 
 Return Item with metadata properties.
 
@@ -441,11 +444,53 @@ Name | Type |
 
 ___
 
+### getKmmApiPath
+
+▸ **getKmmApiPath**(): Promise\<string>
+
+*Defined in [src/workbench-widget-api.ts:170](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L170)*
+
+Fetch path to main kmm api
+
+**Returns:** Promise\<string>
+
+path to main kmm instance
+
+___
+
+### getKmmUiPath
+
+▸ **getKmmUiPath**(): Promise\<string>
+
+*Defined in [src/workbench-widget-api.ts:178](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L178)*
+
+Fetch path to main kmm ui
+
+**Returns:** Promise\<string>
+
+path to main kmm instance
+
+___
+
+### getKmmVersion
+
+▸ **getKmmVersion**(): Promise\<string>
+
+*Defined in [src/workbench-widget-api.ts:162](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L162)*
+
+Fetch kmm version
+
+**Returns:** Promise\<string>
+
+version of the kmm instance
+
+___
+
 ### getMetadataForDomain
 
 ▸ **getMetadataForDomain**(`taskGraphUri`: string, `domainUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:338](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L338)*
+*Defined in [src/workbench-widget-api.ts:363](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L363)*
 
  Return both default metadata and metadata specific for given domain.
 
@@ -464,7 +509,7 @@ ___
 
 ▸ **getMetadataTypes**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:324](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L324)*
+*Defined in [src/workbench-widget-api.ts:349](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L349)*
 
 Return Metadata types valid for item.
 
@@ -483,7 +528,7 @@ ___
 
 ▸ **getMetadataUnfilteredTypes**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:317](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L317)*
+*Defined in [src/workbench-widget-api.ts:342](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L342)*
 
 Return Metadata types.
 
@@ -502,7 +547,7 @@ ___
 
 ▸ **getModelLanguages**(`modelGraphUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:289](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L289)*
+*Defined in [src/workbench-widget-api.ts:314](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L314)*
 
 Return Languages valid for the model.
 
@@ -520,7 +565,7 @@ ___
 
 ▸ **getNarrowerTypes**(`taskGraphUri`: string, `itemUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:282](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L282)*
+*Defined in [src/workbench-widget-api.ts:307](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L307)*
 
 Return Narrower Types valid for current item.
 
@@ -539,7 +584,7 @@ ___
 
 ▸ **getNarrowerUnfilteredTypes**(`taskGraphUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:275](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L275)*
+*Defined in [src/workbench-widget-api.ts:300](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L300)*
 
 Return all Narrower Types.
 
@@ -557,7 +602,7 @@ ___
 
 ▸ **getSemaphoreSettings**(`taskGraphUri`: string): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:296](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L296)*
+*Defined in [src/workbench-widget-api.ts:321](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L321)*
 
 Return Semaphore Settings.
 
@@ -575,7 +620,7 @@ ___
 
 ▸ **getStateParams**(): Promise\<{ itemUri?: undefined \| string ; modelGraphUri?: undefined \| string ; taskGraphUri?: undefined \| string  }>
 
-*Defined in [src/workbench-widget-api.ts:185](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L185)*
+*Defined in [src/workbench-widget-api.ts:210](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L210)*
 
 Fetch current host state params (modelGraphUri, taskGraphUri, itemUri).
 
@@ -587,7 +632,7 @@ ___
 
 ▸ **getStudioGraphQLPath**(): Promise\<string>
 
-*Defined in [src/workbench-widget-api.ts:170](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L170)*
+*Defined in [src/workbench-widget-api.ts:195](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L195)*
 
 Fetch path to GraphQL endpoint of studio
 
@@ -601,7 +646,7 @@ ___
 
 ▸ **getStudioPath**(): Promise\<string>
 
-*Defined in [src/workbench-widget-api.ts:161](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L161)*
+*Defined in [src/workbench-widget-api.ts:186](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L186)*
 
 Fetch path to main studio instance
 
@@ -615,7 +660,7 @@ ___
 
 ▸ **getTopConcepts**(`taskGraphUri`: string, `itemUri`: string, `limit?`: number, `offset?`: number): Promise\<unknown>
 
-*Defined in [src/workbench-widget-api.ts:401](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L401)*
+*Defined in [src/workbench-widget-api.ts:426](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L426)*
 
  Return concept scheme details with top concepts.
 
@@ -636,7 +681,7 @@ ___
 
 ▸ **navigateToItem**(`item`: object): Promise\<void>
 
-*Defined in [src/workbench-widget-api.ts:208](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L208)*
+*Defined in [src/workbench-widget-api.ts:233](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L233)*
 
 Navigate host application to item.
 
@@ -654,7 +699,7 @@ ___
 
 ▸ **openWidget**(`targetWidgetId`: string, `config?`: [OpenWidgetConfig](../README.md#openwidgetconfig), `context?`: any): Promise\<void>
 
-*Defined in [src/workbench-widget-api.ts:230](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L230)*
+*Defined in [src/workbench-widget-api.ts:255](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L255)*
 
 Open different widget in the same model.
 
@@ -674,7 +719,7 @@ Name | Type | Default value | Description |
 
 ▪  **actions**: object
 
-*Defined in [src/workbench-widget-api.ts:408](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/65b73b9/src/workbench-widget-api.ts#L408)*
+*Defined in [src/workbench-widget-api.ts:433](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/881758e/src/workbench-widget-api.ts#L433)*
 
 Actions can be used to use Workbench functionality directly.
 
