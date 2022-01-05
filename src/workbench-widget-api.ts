@@ -137,7 +137,6 @@ export class WorkbenchWidgetApi {
    * @param debug If set to true additional debug messages will be logged to console
    */
   constructor(private readonly debug = false) {
-    this.debug = debug;
     window.addEventListener("message", this._receiveMessage, false);
     this._postMessage(this._createMessage("ready"));
   }
@@ -223,7 +222,7 @@ export class WorkbenchWidgetApi {
     var message = this._createMessage("getContext");
     return this._postMessage<{
       context: any;
-    }>(message, 100);
+    }>(message, 1000);
   }
   /**
    * Navigate host application to item.
