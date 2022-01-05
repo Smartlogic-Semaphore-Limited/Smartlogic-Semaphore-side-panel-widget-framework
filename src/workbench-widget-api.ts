@@ -10,6 +10,7 @@ type WaitForResponse = {
   promise: Promise<any>;
   resolve: (data: any) => void;
   reject: (data: any) => void;
+  timeoutID: number;
 };
 
 /** @internal */
@@ -153,14 +154,37 @@ export class WorkbenchWidgetApi {
     this._eventListeners.get(type)!.add(listener);
     return () => this._eventListeners.get(type)!.delete(listener);
   }
-
+  /**
+   * Fetch kmm version
+   * @returns version of the kmm instance
+   */
+  getKmmVersion() {
+    const message = this._createMessage("getKmmVersion");
+    return this._postMessage<string>(message, 1000);
+  }
+  /**
+   * Fetch path to main kmm api
+   * @returns path to main kmm instance
+   */
+  getKmmApiPath() {
+    const message = this._createMessage("getKmmApiPath");
+    return this._postMessage<string>(message, 1000);
+  }
+  /**
+   * Fetch path to main kmm ui
+   * @returns path to main kmm instance
+   */
+  getKmmUiPath() {
+    const message = this._createMessage("getKmmUiPath");
+    return this._postMessage<string>(message, 1000);
+  }
   /**
    * Fetch path to main studio instance
    * @returns path to main studio instance
    */
   getStudioPath() {
     const message = this._createMessage("getStudioPath");
-    return this._postMessage<string>(message);
+    return this._postMessage<string>(message, 1000);
   }
 
   /**
@@ -169,7 +193,7 @@ export class WorkbenchWidgetApi {
    */
   getStudioGraphQLPath() {
     const message = this._createMessage("getStudioGraphQLPath");
-    return this._postMessage<string>(message);
+    return this._postMessage<string>(message, 1000);
   }
 
   /**
@@ -198,7 +222,7 @@ export class WorkbenchWidgetApi {
     var message = this._createMessage("getContext");
     return this._postMessage<{
       context: any;
-    }>(message);
+    }>(message, 1000);
   }
   /**
    * Navigate host application to item.
@@ -598,15 +622,23 @@ export class WorkbenchWidgetApi {
     };
   }
 
-  private _postMessage = <Result>(message: Message): Promise<Result> => {
+  private _postMessage = <Result>(message: Message, timeout: number = 60000): Promise<Result> => {
     const waitForResponse: Partial<WaitForResponse> = {};
     waitForResponse.promise = new Promise((resolve, reject) => {
       waitForResponse.resolve = resolve;
       waitForResponse.reject = reject;
+      waitForResponse.timeoutID = setTimeout(() => {
+        reject("Host response timeout");
+      }, timeout) as unknown as number;
     });
+    waitForResponse.promise.finally(() => {
+      clearTimeout(waitForResponse.timeoutID);
+      this._promises.delete(message.data.tag);
+    })
+
     this._promises.set(message.data.tag, waitForResponse as WaitForResponse);
     window.parent.postMessage(decycle(message), "*");
-    this._logMessage("postMessage", message);
+    this._logMessage("postMessage", message, timeout);
     return waitForResponse.promise;
   };
 
