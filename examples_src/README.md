@@ -60,4 +60,6 @@ In order to enable example widgets:
 **View menu** should contain 3 additional positions
 ("Wikipedia Example Widget", "Api Presentation Example Widget", and "Lexical Resources Example Widget")
 
+Note, because the Wikipedia API was discontinued in July 2023 this version of the widget no longer works.
+The version that is currently live, is on the internal SidePanelWidgets GIT repo
 Please refer to [(Configuration Documentation)](../doc/Configuration.md) for further details.
