@@ -6,147 +6,88 @@
  * ```
  * {$ref: PATH}
  * ```
- * where the `PATH` is a JSONPath string that locates the first occurance.
+ * where the `PATH` is a Array<string> that locates the first occurrence.
  * So,
  * ```javascript
  *      let a = [];
  *      a[0] = a;
  *      return JSON.stringify(decycle(a));
  * ```
- * produces the string `'[{"$ref":"$"}]'`.
+ * produces the string `'[{"$ref":[]}]'`.
  *
- * JSONPath is used to locate the unique object. $ indicates the top level of
- * the object or array. `[NUMBER]` or `[STRING]` indicates a child member or
+ * Path is used to locate the unique object. [] indicates the top level of
+ * the object or array. `[STRING]` indicates a child member or
  * property.
  *
  * @category JSON helpers
  */
-export function decycle(object: any) {
-  const objects: any[] = []; // Keep a reference to each unique object or array
-  const paths: string[] = []; // Keep the path to each unique object or array
-
-  return (function derez(value: any, path: string): any {
-    // The derez recurses through the object, producing the deep copy.
-
-    let i: number, // The loop counter
-      name: string, // Property name
-      nu: any; // The new object or array
-
-    // typeof null === 'object', so go on if this value is really an object but not
-    // one of the weird builtin objects.
-
-    if (
-      typeof value === "object" &&
-      value !== null &&
-      !(value instanceof Boolean) &&
-      !(value instanceof Date) &&
-      !(value instanceof Number) &&
-      !(value instanceof RegExp) &&
-      !(value instanceof String)
-    ) {
-      // If the value is an object or array, look to see if we have already
-      // encountered it. If so, return a $ref/path object. This is a hard way,
-      // linear search that will get slower as the number of unique objects grows.
-
-      for (i = 0; i < objects.length; i += 1) {
-        if (objects[i] === value) {
-          return { $ref: paths[i] };
-        }
-      }
-
-      // Otherwise, accumulate the unique value and its path.
-
-      objects.push(value);
-      paths.push(path);
-
-      // If it is an array, replicate the array.
-
-      if (Object.prototype.toString.apply(value) === "[object Array]") {
-        nu = [];
-        for (i = 0; i < value.length; i += 1) {
-          nu[i] = derez(value[i], path + "[" + i + "]");
-        }
+const Root = Symbol();
+function isObject(value:any) {
+  const type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+export const decycle = (object:any) => {
+  const paths = new WeakMap();
+  function walk(value:any, key:string|typeof Root, parent?:any) {
+    if (key !== "$ref" && isObject(value)) {
+      const seen = paths.has(value);
+      if (seen) {
+        return { $ref: paths.get(value) };
       } else {
-        // If it is an object, replicate the object.
-
-        nu = {};
-        for (name in value) {
-          if (Object.prototype.hasOwnProperty.call(value, name)) {
-            nu[name] = derez(
-              value[name],
-              path + "[" + JSON.stringify(name) + "]"
-            );
-          }
-        }
+        paths.set(value, Root === key ? [] : [...(paths.get(parent) ?? []), key]);
+        return getCopy(value);
       }
-      return nu;
     }
     return value;
-  })(object, "$");
-}
+  }
+  function getCopy(src:any) {
+    const target:Record<any, any> = Array.isArray(src) ? [] : {};
+    Object.entries(src).forEach(([key, value]) => {
+      target[key] = walk(value, key, src);
+    });
+    return target;
+  }
+  return walk(object, Root);
+};
 
 /**
  * Restore an object that was reduced by decycle. Members whose values are
  * objects of the form `{$ref: PATH}` are replaced with references to the
  * value found by the PATH. This will restore cycles. The object will be mutated.
  *
- * The `eval` function is used to locate the values described by a PATH. The
- * root object is kept in a `$` variable. A regular expression is used to
- * assure that the PATH is extremely well formed. The regexp contains nested
- * * quantifiers. That has been known to have extremely bad performance
- * problems on some browsers for very long strings. A PATH is expected to be
- * reasonably short. A PATH is allowed to belong to a very restricted subset of
- * Goessner's JSONPath.
- *
  * So,
  * ```javascript
- *      let s = '[{"$ref":"$"}]';
+ *      let s = '[{"$ref":[]}]';
  *      return retrocycle(JSON.parse(s));
  * ```
  * produces an array containing a single element which is the array itself.
  *
  * @category JSON helpers
  */
-export function retrocycle($: any) {
-  const px = /^\$(?:\[(?:\d+|\"(?:[^\\\"\u0000-\u001f]|\\([\\\"\/bfnrt]|u[0-9a-zA-Z]{4}))*\")\])*$/;
-
-  (function rez(value) {
-    // The rez function walks recursively through the object looking for $ref
-    // properties. When it finds one that has a value that is a path, then it
-    // replaces the $ref object with a reference to the value that is found by
-    // the path.
-
-    let i, item, name, path;
-
-    if (value && typeof value === "object") {
-      if (Object.prototype.toString.apply(value) === "[object Array]") {
-        for (i = 0; i < value.length; i += 1) {
-          item = value[i];
-          if (item && typeof item === "object") {
-            path = item.$ref;
-            if (typeof path === "string" && px.test(path)) {
-              value[i] = eval(path);
-            } else {
-              rez(item);
-            }
-          }
-        }
-      } else {
-        for (name in value) {
-          if (typeof value[name] === "object") {
-            item = value[name];
-            if (item) {
-              path = item.$ref;
-              if (typeof path === "string" && px.test(path)) {
-                value[name] = eval(path);
-              } else {
-                rez(item);
-              }
-            }
-          }
-        }
+export const retrocycle = (object:any) => {
+  function deref(parent:any, key:string) {
+    const element = parent[key];
+    if (isObject(element) && "$ref" in element) {
+      if (!Array.isArray(element.$ref)) {
+        throw new Error(`Invalid $ref "${element.$ref}" value ${element}`);
       }
+      try {
+        parent[key] = element.$ref.reduce((acc:any, key:string) => acc[key], object);
+      } catch (e) {
+        throw new Error(`Invalid $ref "${element.$ref}" value not found ${element}`);
+      }
+    } else {
+      walk(element);
     }
-  })($);
-  return $;
-}
+  }
+  function walk(value:any) {
+    if (isObject(value)) {
+      Object.keys(value).forEach(function (key) {
+        deref(value, key);
+      });
+    }
+    return value;
+  }
+  return walk(object);
+};
+
