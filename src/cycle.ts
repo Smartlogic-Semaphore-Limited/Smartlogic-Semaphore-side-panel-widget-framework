@@ -26,7 +26,7 @@ function isObject(value:any) {
   const type = typeof value;
   return value != null && (type == 'object' || type == 'function');
 }
-export const decycle = (object:any) => {
+export function decycle (object:any) {
   const paths = new WeakMap();
   function walk(value:any, key:string|typeof Root, parent?:any) {
     if (key !== "$ref" && isObject(value)) {
@@ -64,7 +64,7 @@ export const decycle = (object:any) => {
  *
  * @category JSON helpers
  */
-export const retrocycle = (object:any) => {
+export function retrocycle (object:any) {
   function deref(parent:any, key:string) {
     const element = parent[key];
     if (isObject(element) && "$ref" in element) {
@@ -89,5 +89,5 @@ export const retrocycle = (object:any) => {
     return value;
   }
   return walk(object);
-};
+}
 
