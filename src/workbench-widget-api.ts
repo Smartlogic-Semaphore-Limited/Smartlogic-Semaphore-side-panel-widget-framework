@@ -42,13 +42,16 @@ type KmmEvent =
     }
   | {
       type: "CONCEPT_SCHEME_UPDATED";
+    }
+  | {
+      type: "COLLECTION_UPDATED";
     };
 
 /**
  * All event types users can listen for.
  * @category KMM Messaging
  */
-type KmmEventType = "CONCEPT_UPDATED" | "CONCEPT_SCHEME_UPDATED"; // Pick<KmmEvent, "type">["type"];
+type KmmEventType = KmmEvent["type"];
 
 /**
  * General type of an event listener.
@@ -127,16 +130,19 @@ type OpenWidgetConfig = {
  */
 export class WorkbenchWidgetApi {
   private readonly WIDGET_ID = decodeURIComponent(
-    window.location.hash.substr(1).replace(/^\//, "").replace(/\+/g, " "),
+    window.location.hash.slice(1).replace(/^\//, "").replace(/\+/g, " "),
   );
   private _promises: Map<string, WaitForResponse> = new Map();
 
   private _eventListeners: Map<string, Set<EventListener>> = new Map();
 
+  private readonly debug: boolean;
+
   /**
    * @param debug If set to true additional debug messages will be logged to console
    */
-  constructor(private readonly debug = false) {
+  constructor(debug = false) {
+    this.debug = debug;
     window.addEventListener("message", this._receiveMessage, false);
     this._postMessage(this._createMessage("ready"));
   }
@@ -371,6 +377,12 @@ export class WorkbenchWidgetApi {
   }
 
   /**
+   *  Return all collections for given task.
+   */
+  getCollections(taskGraphUri: string) {
+    return this._dataSourcesWithTaskUri("getCollections", taskGraphUri);
+  }
+  /**
    *  Return concept details.
    */
   getConceptDetails(taskGraphUri: string, itemUri: string) {
@@ -420,10 +432,24 @@ export class WorkbenchWidgetApi {
   }
 
   /**
+   * For given concept return list of all collections that contain this concept.
+   */
+  getMemberOfCollections(taskGraphUri: string, itemUri: string) {
+    return this._dataSourcesWithTaskAndItemUri("getMemberOfCollections", taskGraphUri, itemUri);
+  }
+
+  /**
    *  Return concept scheme details with top concepts.
    */
   getTopConcepts(taskGraphUri: string, itemUri: string, limit: number = 10, offset: number = 0) {
     return this._dataSourcesWithTaskAndItemUriAndPaging("getTopConcepts", taskGraphUri, itemUri, limit, offset);
+  }
+
+  /**
+   *  Return members of collection.
+   */
+  getMembers(taskGraphUri: string, itemUri: string, limit: number = 10, offset: number = 0) {
+    return this._dataSourcesWithTaskAndItemUriAndPaging("getMembers", taskGraphUri, itemUri, limit, offset);
   }
 
   /**

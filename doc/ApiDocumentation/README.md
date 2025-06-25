@@ -23,10 +23,18 @@
 * [LabelFormValue](README.md#labelformvalue)
 * [OpenWidgetConfig](README.md#openwidgetconfig)
 
+### JSON helpers Variables
+
+* [Root](README.md#root)
+
 ### JSON helpers Functions
 
-* [decycle](README.md#decycle)
 * [retrocycle](README.md#retrocycle)
+
+### Other Functions
+
+* [decycle](README.md#decycle)
+* [isObject](README.md#isobject)
 
 ## KMM Messaging Type aliases
 
@@ -34,7 +42,7 @@
 
 Ƭ  **EventListener**: (data: [KmmEvent](README.md#kmmevent)) => void
 
-*Defined in [src/workbench-widget-api.ts:58](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/77a3957/src/workbench-widget-api.ts#L58)*
+*Defined in [src/workbench-widget-api.ts:61](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/7d72210/src/workbench-widget-api.ts#L61)*
 
 General type of an event listener.
 
@@ -44,9 +52,9 @@ ___
 
 ### KmmEvent
 
-Ƭ  **KmmEvent**: { type: \"CONCEPT\_UPDATED\"  } \| { type: \"CONCEPT\_SCHEME\_UPDATED\"  }
+Ƭ  **KmmEvent**: { type: \"CONCEPT\_UPDATED\"  } \| { type: \"CONCEPT\_SCHEME\_UPDATED\"  } \| { type: \"COLLECTION\_UPDATED\"  }
 
-*Defined in [src/workbench-widget-api.ts:39](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/77a3957/src/workbench-widget-api.ts#L39)*
+*Defined in [src/workbench-widget-api.ts:39](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/7d72210/src/workbench-widget-api.ts#L39)*
 
 Type of event that KMM application can broadcast to widgets.
 
@@ -56,9 +64,9 @@ ___
 
 ### KmmEventType
 
-Ƭ  **KmmEventType**: \"CONCEPT\_UPDATED\" \| \"CONCEPT\_SCHEME\_UPDATED\"
+Ƭ  **KmmEventType**: KmmEvent[\"type\"]
 
-*Defined in [src/workbench-widget-api.ts:51](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/77a3957/src/workbench-widget-api.ts#L51)*
+*Defined in [src/workbench-widget-api.ts:54](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/7d72210/src/workbench-widget-api.ts#L54)*
 
 All event types users can listen for.
 
@@ -70,7 +78,7 @@ ___
 
 Ƭ  **LabelEditFormData**: { config: [LabelFormConfig](README.md#labelformconfig) ; data: [LabelFormValue](README.md#labelformvalue)  }
 
-*Defined in [src/workbench-widget-api.ts:102](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/77a3957/src/workbench-widget-api.ts#L102)*
+*Defined in [src/workbench-widget-api.ts:105](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/7d72210/src/workbench-widget-api.ts#L105)*
 
 Data transfer type for sending information about editing single label (alt or pref).
 Used in [showFormAddMultipleTranslation](classes/workbenchwidgetapi.md#showformaddmultipletranslation)
@@ -88,7 +96,7 @@ ___
 
 Ƭ  **LabelFormConfig**: { editableLanguage: boolean ; editableType: boolean  }
 
-*Defined in [src/workbench-widget-api.ts:89](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/77a3957/src/workbench-widget-api.ts#L89)*
+*Defined in [src/workbench-widget-api.ts:92](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/7d72210/src/workbench-widget-api.ts#L92)*
 
 #### Type declaration:
 
@@ -103,7 +111,7 @@ ___
 
 Ƭ  **LabelFormValue**: { labelLanguage: string ; labelValue: string ; typeUri: string  }
 
-*Defined in [src/workbench-widget-api.ts:77](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/77a3957/src/workbench-widget-api.ts#L77)*
+*Defined in [src/workbench-widget-api.ts:80](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/7d72210/src/workbench-widget-api.ts#L80)*
 
 #### Type declaration:
 
@@ -119,7 +127,7 @@ ___
 
 Ƭ  **OpenWidgetConfig**: { modal?: boolean \| { animation?: undefined \| false \| true ; backdrop?: boolean \| \"static\" ; keyboard?: undefined \| false \| true ; size?: \"sm\" \| \"lg\" \| \"xl\" \| "" ; windowClass?: \"right\" \| \"left\" \| ""  }  }
 
-*Defined in [src/workbench-widget-api.ts:113](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/77a3957/src/workbench-widget-api.ts#L113)*
+*Defined in [src/workbench-widget-api.ts:116](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/7d72210/src/workbench-widget-api.ts#L116)*
 
 Data transfer type for configure the way widget is opened.
 Used in [openWidget](classes/workbenchwidgetapi.md#openwidget)
@@ -130,13 +138,13 @@ Name | Type |
 ------ | ------ |
 `modal?` | boolean \| { animation?: undefined \| false \| true ; backdrop?: boolean \| \"static\" ; keyboard?: undefined \| false \| true ; size?: \"sm\" \| \"lg\" \| \"xl\" \| "" ; windowClass?: \"right\" \| \"left\" \| ""  } |
 
-## JSON helpers Functions
+## JSON helpers Variables
 
-### decycle
+### Root
 
-▸ **decycle**(`object`: any): any
+• `Const` **Root**: unique symbol = Symbol()
 
-*Defined in [src/cycle.ts:24](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/77a3957/src/cycle.ts#L24)*
+*Defined in [src/cycle.ts:24](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/7d72210/src/cycle.ts#L24)*
 
 Make a deep copy of an object or array, assuring that there is at most
 one instance of each object or array in the resulting structure. The
@@ -145,18 +153,37 @@ an object of the form
 ```
 {$ref: PATH}
 ```
-where the `PATH` is a JSONPath string that locates the first occurance.
+where the `PATH` is a Array<string> that locates the first occurrence.
 So,
 ```javascript
      let a = [];
      a[0] = a;
      return JSON.stringify(decycle(a));
 ```
-produces the string `'[{"$ref":"$"}]'`.
+produces the string `'[{"$ref":[]}]'`.
 
-JSONPath is used to locate the unique object. $ indicates the top level of
-the object or array. `[NUMBER]` or `[STRING]` indicates a child member or
+Path is used to locate the unique object. [] indicates the top level of
+the object or array. `[STRING]` indicates a child member or
 property.
+
+## JSON helpers Functions
+
+### retrocycle
+
+▸ **retrocycle**(`object`: any): any
+
+*Defined in [src/cycle.ts:67](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/7d72210/src/cycle.ts#L67)*
+
+Restore an object that was reduced by decycle. Members whose values are
+objects of the form `{$ref: PATH}` are replaced with references to the
+value found by the PATH. This will restore cycles. The object will be mutated.
+
+So,
+```javascript
+     let s = '[{"$ref":[]}]';
+     return retrocycle(JSON.parse(s));
+```
+produces an array containing a single element which is the array itself.
 
 #### Parameters:
 
@@ -168,35 +195,34 @@ Name | Type |
 
 ___
 
-### retrocycle
+## Other Functions
 
-▸ **retrocycle**(`$`: any): any
+### decycle
 
-*Defined in [src/cycle.ts:110](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/77a3957/src/cycle.ts#L110)*
+▸ **decycle**(`object`: any): any
 
-Restore an object that was reduced by decycle. Members whose values are
-objects of the form `{$ref: PATH}` are replaced with references to the
-value found by the PATH. This will restore cycles. The object will be mutated.
-
-The `eval` function is used to locate the values described by a PATH. The
-root object is kept in a `$` variable. A regular expression is used to
-assure that the PATH is extremely well formed. The regexp contains nested
-* quantifiers. That has been known to have extremely bad performance
-problems on some browsers for very long strings. A PATH is expected to be
-reasonably short. A PATH is allowed to belong to a very restricted subset of
-Goessner's JSONPath.
-
-So,
-```javascript
-     let s = '[{"$ref":"$"}]';
-     return retrocycle(JSON.parse(s));
-```
-produces an array containing a single element which is the array itself.
+*Defined in [src/cycle.ts:29](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/7d72210/src/cycle.ts#L29)*
 
 #### Parameters:
 
 Name | Type |
 ------ | ------ |
-`$` | any |
+`object` | any |
 
 **Returns:** any
+
+___
+
+### isObject
+
+▸ **isObject**(`value`: any): boolean
+
+*Defined in [src/cycle.ts:25](https://github.com/Smartlogic-Semaphore-Limited/Smartlogic-Semaphore-side-panel-widget-framework/blob/7d72210/src/cycle.ts#L25)*
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`value` | any |
+
+**Returns:** boolean
