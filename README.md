@@ -118,7 +118,11 @@ Please refer to [Configuration Documentation](doc/Configuration.md) for further 
 
 ## Compatibility
 
-Version 2.0.0 of the API is compatible with Semaphore KMM version after the release 4.2.8.
+Version 2.x of the API is compatible with Semaphore KMM version after the release 4.2.8.
+
+Version 3.x is compatible only with Semaphore 5.8.4 or newer.
+
+Version 4.x is compatible with Semaphore 5.10.2 or newer.
 
 ## Details
 
